@@ -231,7 +231,7 @@ const Staffinputs = () => {
 
       <div>
         {staffid && (
-          <div className="flex flex-col justify-center items-center border gap-3 w-1/3 pb-4">
+          <div className="flex flex-col justify-center items-center border gap-3 w- pb-4">
 
             <div className=" bg-blue-800 w-full flex flex-col gap-4 items-center rounded-b-full pt-4  ">
                 <p className="font-bold text-white"><span className="text-3xl italic">T</span>ee Web Coder</p>
