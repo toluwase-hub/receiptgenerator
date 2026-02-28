@@ -60,7 +60,7 @@ const Navbar = () => {
           <ul className='space-y-5 flex justify-around'>
             <li className=''>
               <NavLink to="/"  className={  ({isActive}) => 
-                  isActive ? "text-gray-300 text-md transition-all duration-500" : "text-sm transition-all duration-500"
+                  isActive ? "text-gray-300 scale-120 transition-all duration-500" : "scale-100 transition-all duration-500"
               }>
                 <div className='flex flex-col justify-center items-center'>
                   <span><IoReceiptOutline size={25}  /></span>
@@ -71,7 +71,7 @@ const Navbar = () => {
 
             <li className=''>
               <NavLink to="/staff"  className={  ({isActive}) => 
-                  isActive ? "text-gray-300 text-md transition-all duration-500" : "text-sm transition-all duration-500"
+                  isActive ? "text-gray-300 scale-120 transition-all duration-500" : "scale-100 transition-all duration-500"
               }>
                 <div className='flex flex-col justify-center items-center'>
                   <span><GrUserWorker size={25} /></span>
@@ -82,7 +82,7 @@ const Navbar = () => {
 
             <li className=''>
               <NavLink to="/setting" className={  ({isActive}) => 
-                  isActive ? "text-gray-300 text-md transition-all duration-500" : "text-sm transition-all duration-500"
+                  isActive ? "text-gray-300 scale-120  transition-all duration-500" : "scale-100 transition-all duration-500"
               }>
                 <div className='flex flex-col justify-center items-center'>
                   <span><IoSettingsOutline size={25} /></span>

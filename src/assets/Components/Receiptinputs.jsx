@@ -7,6 +7,11 @@ import autoTable from "jspdf-autotable";
 const Receiptinputs = () => {
   const [receiptData, setReceiptData] = useState(null);
 
+  const capitalizeText = (text) => {
+    return text.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+  };
+
+
   const now = new Date();
 const formattedDate = now.toLocaleDateString();
 const formattedTime = now.toLocaleTimeString();
@@ -64,7 +69,8 @@ const formattedTime = now.toLocaleTimeString();
     const today = new Date().toLocaleDateString();
 
     // HEADER
-    doc.setFontSize(20);
+    doc.setFontSize(22);
+    doc.setFont('bold')
     doc.text("RECEIPT", 105, 20, { align: "center" });
     doc.setFontSize(12);
     doc.text("Ola Electric & Electronics Nigeria Ltd.", 105, 28, { align: "center" });
@@ -74,16 +80,21 @@ const formattedTime = now.toLocaleTimeString();
     doc.text("Website: receiptgenerator.vercel.app ", 105, 52, { align: "center" });
 
     // CUSTOMER DETAILS
-    doc.text(`Date: ${today}`, 14, 66);
-    doc.text(`Customer: ${CustomerName}`, 14, 72);
-    doc.text(`Address: ${CustomerAddress}`, 14, 78);
-    doc.text(`Phone: ${CustomerPhoneNo}`, 14, 84);
-    doc.text(`Email: ${CustomerEmail || "-"}`, 14, 90);
-    doc.text(`Payment Method: ${PaymentMethod}`, 14, 96);
+    doc.setFontSize(20);
+    doc.setFont('bold')
+    doc.text(`Customer Details`, 14, 70);
+    doc.setFontSize(12);
+    doc.text(`Date: ${today}`, 14, 80);
+    doc.text(`Customer:  ${CustomerName}`, 14, 86);
+    doc.text(`Address: ${CustomerAddress}`, 14, 92);
+    doc.text(`Phone: ${CustomerPhoneNo}`, 14, 98);
+    doc.text(`Email: ${CustomerEmail || "-"}`, 14, 104);
+    doc.text(`Payment Method: ${PaymentMethod}`, 14, 110);
 
     // PRODUCT TABLE
+    doc.text(`Product Details`, 100, 116);
     autoTable(doc, {
-      startY: 110,
+      startY: 124,
       head: [["Product", "Quantity", "Unit Price", "Total"]],
       body: [[ProductName, Quantity, `₦${ProductPrice}`, `₦${subtotal.toFixed(2)}`]],
     });
@@ -105,6 +116,7 @@ const formattedTime = now.toLocaleTimeString();
 
   return (
     <div className="w-[95%] mx-auto">
+    <h1 className="font-bold">Receipt Section</h1>
       {/* FORM */}
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3 mt-4">
         <div className="flex flex-col">
@@ -222,6 +234,11 @@ const formattedTime = now.toLocaleTimeString();
         </div>
         <button type="submit" className="bg-black text-white p-2">Generate Receipt</button>
       </form>
+        <div className="font-bold py-2">
+      { 
+        receiptData === null ? "Once Generated Your Receipt Will Show Below🔻" : "Contratulations ✅ Your Receipt Is Generated Successfully "
+      }
+      </div>
 
       {/* PREVIEW DIV */}
       {receiptData && (
@@ -239,11 +256,11 @@ const formattedTime = now.toLocaleTimeString();
 
             <div>
             <p className="font-bold underline text-2xl">Customer Details</p>
-            <p><strong>Customer:</strong> {receiptData.CustomerName}</p>
-            <p><strong>Address:</strong> {receiptData.CustomerAddress}</p>
+            <p className="capitalize"><strong>Customer:</strong> {receiptData.CustomerName}</p>
+            <p className="capitalize"><strong>Address:</strong> {receiptData.CustomerAddress}</p>
             <p><strong>Phone:</strong> {receiptData.CustomerPhoneNo}</p>
             <p><strong>Email:</strong> {receiptData.CustomerEmail || "-"}</p>
-            <p><strong>Payment Method:</strong> {receiptData.PaymentMethod}</p>
+            <p className="capitalize"><strong>Payment Method:</strong> {receiptData.PaymentMethod}</p>
             </div>
 
             <div className="">
@@ -254,7 +271,7 @@ const formattedTime = now.toLocaleTimeString();
 
           <div className="mt-4">
             <p className="font-bold underline text-2xl">Product Details</p>
-            <p className="border-b"><strong>Product:</strong> {receiptData.ProductName}</p>
+            <p className="border-b capitalize"><strong>Product:</strong> {receiptData.ProductName}</p>
             <p className="border-b"><strong>Quantity:</strong> {receiptData.Quantity}</p>
             <p className="border-b"><strong>Unit Price:</strong> ₦{receiptData.ProductPrice}</p>
             <p className="border-b"><strong>Subtotal:</strong> ₦{(Number(receiptData.ProductPrice) * Number(receiptData.Quantity)).toFixed(2)}</p>
