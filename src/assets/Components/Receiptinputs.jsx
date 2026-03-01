@@ -3,13 +3,21 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-
+import { useReactToPrint } from "react-to-print";
+import { useRef } from "react";
 const Receiptinputs = () => {
   const [receiptData, setReceiptData] = useState(null);
 
-  const capitalizeText = (text) => {
-    return text.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-  };
+  const ComponentRef = useRef();
+  
+   const HandlePrint = useReactToPrint({
+    contentRef: ComponentRef,
+    documentTitle: "Product-Receipt",
+  });
+
+  // const capitalizeText = (text) => {
+  //   return text.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+  // };
 
 
   const now = new Date();
@@ -47,72 +55,72 @@ const formattedTime = now.toLocaleTimeString();
     },
   });
 
-  const generatePDF = () => {
-    if (!receiptData) return;
+  // const generatePDF = () => {
+  //   if (!receiptData) return;
 
-    const doc = new jsPDF();
-    const {
-      ProductName,
-      ProductPrice,
-      Quantity,
-      CustomerName,
-      CustomerAddress,
-      CustomerPhoneNo,
-      CustomerEmail,
-      PaymentMethod,
-      TAX,
-    } = receiptData;
+  //   const doc = new jsPDF();
+  //   const {
+  //     ProductName,
+  //     ProductPrice,
+  //     Quantity,
+  //     CustomerName,
+  //     CustomerAddress,
+  //     CustomerPhoneNo,
+  //     CustomerEmail,
+  //     PaymentMethod,
+  //     TAX,
+  //   } = receiptData;
 
-    const subtotal = Number(ProductPrice) * Number(Quantity);
-    const taxAmount = (subtotal * Number(TAX || 0)) / 100;
-    const total = subtotal + taxAmount;
-    const today = new Date().toLocaleDateString();
+  //   const subtotal = Number(ProductPrice) * Number(Quantity);
+  //   const taxAmount = (subtotal * Number(TAX || 0)) / 100;
+  //   const total = subtotal + taxAmount;
+  //   const today = new Date().toLocaleDateString();
 
-    // HEADER
-    doc.setFontSize(22);
-    doc.setFont('bold')
-    doc.text("RECEIPT", 105, 20, { align: "center" });
-    doc.setFontSize(12);
-    doc.text("Ola Electric & Electronics Nigeria Ltd.", 105, 28, { align: "center" });
-    doc.text("Ogbomoso, Oyo State, Nigeria", 105, 34, { align: "center" });
-    doc.text("Phone: 09043933210", 105, 40, { align: "center" });
-    doc.text("Email: Olaniyitoluwase@gmail.com ", 105, 46, { align: "center" });
-    doc.text("Website: receiptgenerator.vercel.app ", 105, 52, { align: "center" });
+  //   // HEADER
+  //   doc.setFontSize(22);
+  //   doc.setFont('bold')
+  //   doc.text("RECEIPT", 105, 20, { align: "center" });
+  //   doc.setFontSize(12);
+  //   doc.text("Ola Electric & Electronics Nigeria Ltd.", 105, 28, { align: "center" });
+  //   doc.text("Ogbomoso, Oyo State, Nigeria", 105, 34, { align: "center" });
+  //   doc.text("Phone: 09043933210", 105, 40, { align: "center" });
+  //   doc.text("Email: Olaniyitoluwase@gmail.com ", 105, 46, { align: "center" });
+  //   doc.text("Website: receiptgenerator.vercel.app ", 105, 52, { align: "center" });
 
-    // CUSTOMER DETAILS
-    doc.setFontSize(20);
-    doc.setFont('bold')
-    doc.text(`Customer Details`, 14, 70);
-    doc.setFontSize(12);
-    doc.text(`Date: ${today}`, 14, 80);
-    doc.text(`Customer:  ${CustomerName}`, 14, 86);
-    doc.text(`Address: ${CustomerAddress}`, 14, 92);
-    doc.text(`Phone: ${CustomerPhoneNo}`, 14, 98);
-    doc.text(`Email: ${CustomerEmail || "-"}`, 14, 104);
-    doc.text(`Payment Method: ${PaymentMethod}`, 14, 110);
+  //   // CUSTOMER DETAILS
+  //   doc.setFontSize(20);
+  //   doc.setFont('bold')
+  //   doc.text(`Customer Details`, 14, 70);
+  //   doc.setFontSize(12);
+  //   doc.text(`Date: ${today}`, 14, 80);
+  //   doc.text(`Customer:  ${CustomerName}`, 14, 86);
+  //   doc.text(`Address: ${CustomerAddress}`, 14, 92);
+  //   doc.text(`Phone: ${CustomerPhoneNo}`, 14, 98);
+  //   doc.text(`Email: ${CustomerEmail || "-"}`, 14, 104);
+  //   doc.text(`Payment Method: ${PaymentMethod}`, 14, 110);
 
-    // PRODUCT TABLE
-    doc.text(`Product Details`, 100, 116);
-    autoTable(doc, {
-      startY: 124,
-      head: [["Product", "Quantity", "Unit Price", "Total"]],
-      body: [[ProductName, Quantity, `₦${ProductPrice}`, `₦${subtotal.toFixed(2)}`]],
-    });
+  //   // PRODUCT TABLE
+  //   doc.text(`Product Details`, 100, 116);
+  //   autoTable(doc, {
+  //     startY: 124,
+  //     head: [["Product", "Quantity", "Unit Price", "Total"]],
+  //     body: [[ProductName, Quantity, `₦${ProductPrice}`, `₦${subtotal.toFixed(2)}`]],
+  //   });
 
-    const finalY = doc.lastAutoTable.finalY + 10;
+  //   const finalY = doc.lastAutoTable.finalY + 10;
 
-    // TOTALS
-    doc.text(`Subtotal: ₦${subtotal.toFixed(2)}`, 140, finalY);
-    doc.text(`Tax (${TAX || 0}%): ₦${taxAmount.toFixed(2)}`, 140, finalY + 6);
-    doc.setFontSize(14);
-    doc.text(`Total: ₦${total.toFixed(2)}`, 140, finalY + 14);
+  //   // TOTALS
+  //   doc.text(`Subtotal: ₦${subtotal.toFixed(2)}`, 140, finalY);
+  //   doc.text(`Tax (${TAX || 0}%): ₦${taxAmount.toFixed(2)}`, 140, finalY + 6);
+  //   doc.setFontSize(14);
+  //   doc.text(`Total: ₦${total.toFixed(2)}`, 140, finalY + 14);
 
-    // FOOTER
-    doc.setFontSize(10);
-    doc.text("Thank you for your business!", 105, 280, { align: "center" });
+  //   // FOOTER
+  //   doc.setFontSize(10);
+  //   doc.text("Thank you for your business!", 105, 280, { align: "center" });
 
-    doc.save("receipt.pdf");
-  };
+  //   doc.save("receipt.pdf");
+  // };
 
   return (
     <div className="w-[95%] mx-auto">
@@ -242,12 +250,13 @@ const formattedTime = now.toLocaleTimeString();
 
       {/* PREVIEW DIV */}
       {receiptData && (
-        <div className="border p-4 mt-6 bg-white shadow-md ">
+        <div>
+        <div ref={ComponentRef} className="border p-4 mt-6 bg-white shadow-md ">
           <div className="border-b pb-2">
           <h1 className="text-2xl font-bold text-center">RECEIPT</h1>
-          <p className="text-center font-medium">Ola Electric & Electronics Nigeria Ltd.</p>
-          <p className="text-center">Ogbomoso, Oyo State, Nigeria</p>
-          <p className="font-light text-center">Phone: 09043933210</p>
+          <p className="text-center font-medium">Tee Website Coder</p>
+          <p className="text-center">Oyo, Oyo State, Nigeria</p>
+          <p className="font-light text-center">Phone/Whatsapp: 09043933210</p>
            <p className="font-light text-center"> Email: Olaniyitoluwase@gmail.com </p> 
            <p className="font-light text-center"> Website: receiptgenerator.vercel.app </p> 
            </div>
@@ -281,8 +290,19 @@ const formattedTime = now.toLocaleTimeString();
             </p>
           </div>
 
-          <button onClick={generatePDF} className="mt-4 bg-green-600 text-white p-2">
-            Download PDF
+          <div>
+            <h1 className="font-bold underline text-2xl py-4">Additional Information</h1>
+            <ul className="flex flex-col gap-1 font-thin">
+              <li>Thank you for your business,</li>
+              <li>Goods sold are not returnable,</li>
+              <li>For inquiries, contact us using the details above.</li>
+            </ul>
+          </div>
+
+          
+        </div>
+        <button onClick={HandlePrint} className="mt-4 bg-green-600 text-white p-2">
+            Download Receipt
           </button>
         </div>
       )}

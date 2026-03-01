@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { useReactToPrint } from "react-to-print";
 
 const Staffinputs = () => {
   const [staffid, setStaffid] = useState(null);
+
+  const componentRef = useRef();
+
+ const handlePrint = useReactToPrint({
+  contentRef: componentRef,
+  documentTitle: "Staff-ID-Card",
+});
 
   const validationSchema = yup.object({
     Image: yup
@@ -67,7 +75,7 @@ const Staffinputs = () => {
             onChange={(event) => {
               formik.setFieldValue("Image", event.currentTarget.files[0]);
             }}
-            className="border"
+            className="border w-[80%]"
           />
         </div>
 
@@ -231,7 +239,9 @@ const Staffinputs = () => {
 
       <div>
         {staffid && (
-          <div className="flex flex-col justify-center items-center border gap-3 w- pb-4">
+          <div>
+          
+          <div ref={componentRef} className="flex flex-col justify-center items-center border gap-3  pb-4">
 
             <div className=" bg-blue-800 w-full flex flex-col gap-4 items-center rounded-b-full pt-4  ">
                 <p className="font-bold text-white"><span className="text-3xl italic">T</span>ee Web Coder</p>
@@ -260,6 +270,9 @@ const Staffinputs = () => {
               <strong className="text-blue-500">Phone: </strong>
               {staffid.StaffPhoneNo}
             </p>
+          </div>
+          <button
+          className="mt-1 bg-green-600 text-white p-2" onClick={handlePrint}>Print ID Card</button>
           </div>
         )}
       </div>
