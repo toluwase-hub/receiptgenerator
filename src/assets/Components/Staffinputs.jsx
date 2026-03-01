@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useReactToPrint } from "react-to-print";
+import { ToastContainer, toast } from "react-toastify";
 
 const Staffinputs = () => {
   const [staffid, setStaffid] = useState(null);
@@ -14,6 +15,17 @@ const Staffinputs = () => {
   contentRef: componentRef,
   documentTitle: "Staff-ID-Card",
 });
+
+useEffect( ()=> {
+  
+      if(staffid === null){
+        toast.warning("Enter the Required Inputs")
+      } 
+       else{
+        toast.success("Successfully Generated")
+      }
+  
+},[staffid])
 
   const validationSchema = yup.object({
     Image: yup
@@ -64,6 +76,7 @@ const Staffinputs = () => {
     <div>
       <h1 className="font-bold">ID Card Section</h1>
       {/* FORM */}
+      <ToastContainer />
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3 mt-4">
         <div>
           <label htmlFor="Image">Image: </label>
@@ -151,7 +164,7 @@ const Staffinputs = () => {
           >
             <option value="">Select Staff Post</option>
             <option value="CEO">CEO</option>
-            <option value="PA">PA</option>
+            <option value="PA">P.A</option>
             <option value="Social Media Manager">Social Media Manager</option>
             <option value="Secretary">Secretary</option>
             <option value="Other">Other</option>

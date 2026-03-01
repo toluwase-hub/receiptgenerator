@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
+import { ToastContainer, toast } from "react-toastify";
 const Receiptinputs = () => {
   const [receiptData, setReceiptData] = useState(null);
 
@@ -18,6 +19,18 @@ const Receiptinputs = () => {
   // const capitalizeText = (text) => {
   //   return text.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
   // };
+useEffect( ()=> {
+  
+      if(receiptData === null){
+        toast.warning("Enter the Required Inputs")
+      } 
+       else{
+        toast.success("Successfully Generated")
+      }
+  
+},[receiptData])
+
+
 
 
   const now = new Date();
@@ -126,6 +139,7 @@ const formattedTime = now.toLocaleTimeString();
     <div className="w-[95%] mx-auto">
     <h1 className="font-bold">Receipt Section</h1>
       {/* FORM */}
+      <ToastContainer />
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3 mt-4">
         <div className="flex flex-col">
           <label className="font-light text-sm" htmlFor="ProductName">Product Name</label>
@@ -135,8 +149,9 @@ const formattedTime = now.toLocaleTimeString();
 
           {formik.touched.ProductName && formik.errors.ProductName && (
           <span className='text-xs text-red-500 font-medium'>
-            {formik.errors.ProductName}
+            {formik.errors.ProductName} 
           </span>
+          
         )}
           </div>
 
@@ -240,7 +255,7 @@ const formattedTime = now.toLocaleTimeString();
           </span>
         )}
         </div>
-        <button type="submit" className="bg-black text-white p-2">Generate Receipt</button>
+        <button type="submit"  className="bg-black text-white p-2">Generate Receipt</button>
       </form>
         <div className="font-bold py-2">
       { 
