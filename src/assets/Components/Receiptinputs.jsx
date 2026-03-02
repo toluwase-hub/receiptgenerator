@@ -266,7 +266,7 @@ const formattedTime = now.toLocaleTimeString();
       {/* PREVIEW DIV */}
       {receiptData && (
         <div>
-        <div ref={ComponentRef} className="border p-4 mt-6 bg-white shadow-md ">
+        <div ref={ComponentRef} className="print-area border p-4 mt-6 bg-white shadow-md ">
           <div className="border-b pb-2">
           <h1 className="text-2xl font-bold text-center">RECEIPT</h1>
           <p className="text-center font-medium">Tee Website Coder</p>
