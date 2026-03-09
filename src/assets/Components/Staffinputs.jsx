@@ -6,7 +6,7 @@ import autoTable from "jspdf-autotable";
 import { useReactToPrint } from "react-to-print";
 import { ToastContainer, toast } from "react-toastify";
 
-const Staffinputs = () => {
+const Staffinputs = ({theme}) => {
   const [staffid, setStaffid] = useState(null);
 
   const componentRef = useRef();
@@ -163,11 +163,11 @@ useEffect( ()=> {
             className="border p-2"
           >
             <option value="">Select Staff Post</option>
-            <option value="CEO">CEO</option>
-            <option value="PA">P.A</option>
-            <option value="Social Media Manager">Social Media Manager</option>
-            <option value="Secretary">Secretary</option>
-            <option value="Other">Other</option>
+            <option className={` ${ theme ? "" : "text-black"}`} value="CEO" >CEO</option>
+            <option className={` ${ theme ? "" : "text-black"}`} value="PA">P.A</option>
+            <option className={` ${ theme ? "" : "text-black"}`} value="Social Media Manager">Social Media Manager</option>
+            <option className={` ${ theme ? "" : "text-black"}`} value="Secretary">Secretary</option>
+            <option className={` ${ theme ? "" : "text-black"}`} value="Other">Other</option>
           </select>
           {formik.touched.Post && formik.errors.Post && (
             <span className="text-xs text-red-500 font-medium">
@@ -239,7 +239,7 @@ useEffect( ()=> {
           )}
         </div>
 
-        <button type="submit" className="bg-black text-white p-2">
+        <button type="submit" className={`${ theme ? "bg-black text-white" : "bg-white text-black"}  p-2`}>
           Generate ID Card
         </button>
       </form>
@@ -254,7 +254,7 @@ useEffect( ()=> {
         {staffid && (
           <div>
           
-          <div ref={componentRef} className="print-area flex flex-col justify-center items-center border gap-3  pb-4">
+          <div ref={componentRef} className={`print-area flex flex-col justify-center ${theme ? "" : "bg-white text-black"} items-center border gap-3  pb-4`}>
 
             <div className=" bg-blue-800 w-full flex flex-col gap-4 items-center rounded-b-full pt-4  ">
                 <p className="font-bold text-white"><span className="text-3xl italic">T</span>ee Web Coder</p>

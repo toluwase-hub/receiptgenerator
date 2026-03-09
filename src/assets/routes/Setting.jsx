@@ -1,8 +1,16 @@
 import React from 'react'
 
-const Setting = () => {
+const Setting = ({theme, changeTheme }) => {
   return (
-    <div>Setting</div>
+    <div>
+
+      <h1>Register</h1>
+      <div>
+        <h1>Theme:</h1>
+          <button className='font-bold' onClick={changeTheme}>{theme ? "Dark" : "Light💡"}</button>
+      </div>
+      
+    </div>
   )
 }
 

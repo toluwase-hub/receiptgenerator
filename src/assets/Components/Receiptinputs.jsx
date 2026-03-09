@@ -6,7 +6,7 @@ import autoTable from "jspdf-autotable";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
-const Receiptinputs = () => {
+const Receiptinputs = ({theme}) => {
   const [receiptData, setReceiptData] = useState(null);
 
   const ComponentRef = useRef();
@@ -243,11 +243,11 @@ const formattedTime = now.toLocaleTimeString();
           </div>
           <div className="flex flex-col">
         <select name="PaymentMethod" value={formik.values.PaymentMethod}
-          onChange={formik.handleChange} className="border p-2">
-          <option value="">Select Payment Method</option>
-          <option value="Cash">Cash</option>
-          <option value="Card">Card</option>
-          <option value="Transfer">Transfer</option>
+          onChange={formik.handleChange} className={`border p-2`}>
+          <option value="" className={` ${ theme ? "" : "text-black"}`}>Select Payment Method</option>
+          <option value="Cash" className={` ${ theme ? "" : "text-black"}`}>Cash</option>
+          <option value="Card" className={` ${ theme ? "" : "text-black"}`}>Card</option>
+          <option value="Transfer" className={` ${ theme ? "" : "text-black"}`}>Transfer</option>
         </select>
                   {formik.touched.PaymentMethod && formik.errors.PaymentMethod && (
           <span className='text-xs text-red-500 font-medium'>
@@ -255,7 +255,7 @@ const formattedTime = now.toLocaleTimeString();
           </span>
         )}
         </div>
-        <button type="submit"  className="bg-black text-white p-2">Generate Receipt</button>
+        <button type="submit"  className={`${ theme ? "bg-black text-white" : "bg-white text-black"}  p-2`}>Generate Receipt</button>
       </form>
         <div className="font-bold py-2">
       { 
@@ -266,7 +266,7 @@ const formattedTime = now.toLocaleTimeString();
       {/* PREVIEW DIV */}
       {receiptData && (
         <div>
-        <div ref={ComponentRef} className="print-area border p-4 mt-6 bg-white shadow-md ">
+        <div ref={ComponentRef} className={`print-area border p-4 mt-6 ${ theme ? "" : "bg-white text-black" }  shadow-md`}>
           <div className="border-b pb-2">
           <h1 className="text-2xl font-bold text-center">RECEIPT</h1>
           <p className="text-center font-medium">Tee Website Coder</p>

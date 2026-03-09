@@ -1,10 +1,10 @@
 import React from 'react'
 import Staffinputs from '../Components/Staffinputs'
 
-const Staff = () => {
+const Staff = ({theme}) => {
   return (
     <div>
-      <Staffinputs />
+      <Staffinputs theme={theme} />
     </div>
   )
 }

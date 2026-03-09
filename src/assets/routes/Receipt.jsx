@@ -1,10 +1,10 @@
 import React from 'react'
 import Receiptinputs from '../Components/Receiptinputs'
 
-const Receipt = () => {
+const Receipt = ({theme}) => {
   return (
-    <div>
-        <Receiptinputs />
+    <div >
+        <Receiptinputs theme={theme} />
     </div>
   )
 }
