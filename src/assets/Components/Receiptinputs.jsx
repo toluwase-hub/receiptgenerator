@@ -6,12 +6,16 @@ import autoTable from "jspdf-autotable";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
-const Receiptinputs = ({theme}) => {
+const Receiptinputs = ({ theme }) => {
   const [receiptData, setReceiptData] = useState(null);
 
+  const generateNewReceipt = ()=> {
+    window.location.reload()
+  }
+
   const ComponentRef = useRef();
-  
-   const HandlePrint = useReactToPrint({
+
+  const HandlePrint = useReactToPrint({
     contentRef: ComponentRef,
     documentTitle: "Product-Receipt",
   });
@@ -19,29 +23,31 @@ const Receiptinputs = ({theme}) => {
   // const capitalizeText = (text) => {
   //   return text.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
   // };
-useEffect( ()=> {
-  
-      if(receiptData === null){
-        toast.warning("Enter the Required Inputs")
-      } 
-       else{
-        toast.success("Successfully Generated")
-      }
-  
-},[receiptData])
-
-
-
+  useEffect(() => {
+    if (receiptData === null) {
+      toast.warning("Enter the Required Inputs");
+    } else {
+      toast.success("Successfully Generated");
+    }
+  }, [receiptData]);
 
   const now = new Date();
-const formattedDate = now.toLocaleDateString();
-const formattedTime = now.toLocaleTimeString();
+  const formattedDate = now.toLocaleDateString();
+  const formattedTime = now.toLocaleTimeString();
 
   const validationSchema = yup.object({
-    ProductName: yup.string().required("Product Name is Required")
-    .max(20, "Product Name must be less than 20 character"),
-    ProductPrice: yup.number().typeError("Must be a number").required("Product price is Required "),
-    Quantity: yup.number().typeError("Must be a number").required("Product Quantity is Required"),
+    ProductName: yup
+      .string()
+      .required("Product Name is Required")
+      .max(20, "Product Name must be less than 20 character"),
+    ProductPrice: yup
+      .number()
+      .typeError("Must be a number")
+      .required("Product price is Required "),
+    Quantity: yup
+      .number()
+      .typeError("Must be a number")
+      .required("Product Quantity is Required"),
     PaymentMethod: yup.string().required("Payment Method is Required"),
     CustomerName: yup.string().required("Customer Name is Required"),
     CustomerAddress: yup.string().required("Customer Address is Required"),
@@ -137,186 +143,326 @@ const formattedTime = now.toLocaleTimeString();
 
   return (
     <div className="w-[95%] mx-auto">
-    <h1 className="font-bold">Receipt Section</h1>
+      <h1 className="font-bold">Receipt Section</h1>
       {/* FORM */}
       <ToastContainer />
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3 mt-4">
         <div className="flex flex-col">
-          <label className="font-light text-sm" htmlFor="ProductName">Product Name</label>
-        <input placeholder="Product Name" type="text" name="ProductName" id="ProductName"
-          value={formik.values.ProductName}
-          onChange={formik.handleChange} className="border p-2" />
+          <label className="font-light text-sm" htmlFor="ProductName">
+            Product Name
+          </label>
+          <input
+            placeholder="Product Name"
+            type="text"
+            name="ProductName"
+            id="ProductName"
+            value={formik.values.ProductName}
+            onChange={formik.handleChange}
+            className="border p-2"
+          />
 
           {formik.touched.ProductName && formik.errors.ProductName && (
-          <span className='text-xs text-red-500 font-medium'>
-            {formik.errors.ProductName} 
-          </span>
-          
-        )}
-          </div>
+            <span className="text-xs text-red-500 font-medium">
+              {formik.errors.ProductName}
+            </span>
+          )}
+        </div>
 
-                  <div className="flex flex-col">
-                    <label className="font-light text-sm" htmlFor="ProductPrice">Product Price</label>
-        <input placeholder="Product Price" type="number" name="ProductPrice" id="ProductPrice"
-          value={formik.values.ProductPrice}
-          onChange={formik.handleChange} className="border p-2" />
+        <div className="flex flex-col">
+          <label className="font-light text-sm" htmlFor="ProductPrice">
+            Product Price
+          </label>
+          <input
+            placeholder="Product Price"
+            type="number"
+            name="ProductPrice"
+            id="ProductPrice"
+            value={formik.values.ProductPrice}
+            onChange={formik.handleChange}
+            className="border p-2"
+          />
 
-           {formik.touched.ProductPrice && formik.errors.ProductPrice && (
-          <span className='text-xs text-red-500 font-medium'>
-            {formik.errors.ProductPrice}
-          </span>
-        )}
-          </div>
+          {formik.touched.ProductPrice && formik.errors.ProductPrice && (
+            <span className="text-xs text-red-500 font-medium">
+              {formik.errors.ProductPrice}
+            </span>
+          )}
+        </div>
 
-          <div className="flex flex-col">
-            <label className="font-light text-sm" htmlFor="Quantity">Quantity</label>
-        <input placeholder="Quantity" type="number" name="Quantity"  id="Quantity"
-          value={formik.values.Quantity}
-          onChange={formik.handleChange} className="border p-2" />
+        <div className="flex flex-col">
+          <label className="font-light text-sm" htmlFor="Quantity">
+            Quantity
+          </label>
+          <input
+            placeholder="Quantity"
+            type="number"
+            name="Quantity"
+            id="Quantity"
+            value={formik.values.Quantity}
+            onChange={formik.handleChange}
+            className="border p-2"
+          />
 
           {formik.touched.Quantity && formik.errors.Quantity && (
-          <span className='text-xs text-red-500 font-medium'>
-            {formik.errors.Quantity}
-          </span>
-        )}
-          </div>
+            <span className="text-xs text-red-500 font-medium">
+              {formik.errors.Quantity}
+            </span>
+          )}
+        </div>
 
-           <div className="flex flex-col">
-           <label className="font-light text-sm" htmlFor="TAX">TAX</label> 
-        <input placeholder="TAX %" type="number" name="TAX" id="TAX"
-          value={formik.values.TAX}
-          onChange={formik.handleChange} className="border p-2" />
-
-           {formik.touched.TAX && formik.errors.TAX && (
-          <span className='text-xs text-red-500 font-medium'>
-            {formik.errors.TAX}
-          </span>
-        )}
-          </div>
-                   <div className="flex flex-col">
-           <label className="font-light text-sm" htmlFor="CustomerName">Customer Name</label> 
-        <input placeholder="Customer Name" type="text" name="CustomerName" id="CustomerName"
-          value={formik.values.CustomerName}
-          onChange={formik.handleChange} className="border p-2" />
-
-           {formik.touched.CustomerName && formik.errors.CustomerName && (
-          <span className='text-xs text-red-500 font-medium'>
-            {formik.errors.CustomerName}
-          </span>
-        )}
-          </div>
         <div className="flex flex-col">
-          <label className="font-light text-sm" htmlFor="CustomerAddress">Customer Address</label>
-        <input placeholder="Customer Address" type="text" name="CustomerAddress" id="CustomerAddress"
-          value={formik.values.CustomerAddress}
-          onChange={formik.handleChange} className="border p-2" />
+          <label className="font-light text-sm" htmlFor="TAX">
+            TAX
+          </label>
+          <input
+            placeholder="TAX %"
+            type="number"
+            name="TAX"
+            id="TAX"
+            value={formik.values.TAX}
+            onChange={formik.handleChange}
+            className="border p-2"
+          />
+
+          {formik.touched.TAX && formik.errors.TAX && (
+            <span className="text-xs text-red-500 font-medium">
+              {formik.errors.TAX}
+            </span>
+          )}
+        </div>
+        <div className="flex flex-col">
+          <label className="font-light text-sm" htmlFor="CustomerName">
+            Customer Name
+          </label>
+          <input
+            placeholder="Customer Name"
+            type="text"
+            name="CustomerName"
+            id="CustomerName"
+            value={formik.values.CustomerName}
+            onChange={formik.handleChange}
+            className="border p-2"
+          />
+
+          {formik.touched.CustomerName && formik.errors.CustomerName && (
+            <span className="text-xs text-red-500 font-medium">
+              {formik.errors.CustomerName}
+            </span>
+          )}
+        </div>
+        <div className="flex flex-col">
+          <label className="font-light text-sm" htmlFor="CustomerAddress">
+            Customer Address
+          </label>
+          <input
+            placeholder="Customer Address"
+            type="text"
+            name="CustomerAddress"
+            id="CustomerAddress"
+            value={formik.values.CustomerAddress}
+            onChange={formik.handleChange}
+            className="border p-2"
+          />
 
           {formik.touched.CustomerAddress && formik.errors.CustomerAddress && (
-          <span className='text-xs text-red-500 font-medium'>
-            {formik.errors.CustomerAddress}
-          </span>
-        )}
-          </div>
+            <span className="text-xs text-red-500 font-medium">
+              {formik.errors.CustomerAddress}
+            </span>
+          )}
+        </div>
         <div className="flex flex-col">
-          <label className="font-light text-sm" htmlFor="CustomerPhoneNo">Customer Phone No</label>
-        <input placeholder="Customer Phone No" type="text" name="CustomerPhoneNo" id="CustomerPhoneNo"
-          value={formik.values.CustomerPhoneNo}
-          onChange={formik.handleChange} className="border p-2" />
+          <label className="font-light text-sm" htmlFor="CustomerPhoneNo">
+            Customer Phone No
+          </label>
+          <input
+            placeholder="Customer Phone No"
+            type="text"
+            name="CustomerPhoneNo"
+            id="CustomerPhoneNo"
+            value={formik.values.CustomerPhoneNo}
+            onChange={formik.handleChange}
+            className="border p-2"
+          />
 
           {formik.touched.CustomerPhoneNo && formik.errors.CustomerPhoneNo && (
-          <span className='text-xs text-red-500 font-medium'>
-            {formik.errors.CustomerPhoneNo}
-          </span>
-        )}
-          </div>
-         <div className="flex flex-col">
-          <label className="font-light text-sm" htmlFor="CustomerEmail">Customer Email</label>
-        <input placeholder="CustomerEmail" type="email" name="CustomerEmail" id="CustomerEmail"
-          value={formik.values.CustomerEmail}
-          onChange={formik.handleChange} className="border p-2" />
+            <span className="text-xs text-red-500 font-medium">
+              {formik.errors.CustomerPhoneNo}
+            </span>
+          )}
+        </div>
+        <div className="flex flex-col">
+          <label className="font-light text-sm" htmlFor="CustomerEmail">
+            Customer Email
+          </label>
+          <input
+            placeholder="CustomerEmail"
+            type="email"
+            name="CustomerEmail"
+            id="CustomerEmail"
+            value={formik.values.CustomerEmail}
+            onChange={formik.handleChange}
+            className="border p-2"
+          />
 
           {formik.touched.CustomerEmail && formik.errors.CustomerEmail && (
-          <span className='text-xs text-red-500 font-medium'>
-            {formik.errors.CustomerEmail}
-          </span>
-        )}
-          </div>
-          <div className="flex flex-col">
-        <select name="PaymentMethod" value={formik.values.PaymentMethod}
-          onChange={formik.handleChange} className={`border p-2`}>
-          <option value="" className={` ${ theme ? "" : "text-black"}`}>Select Payment Method</option>
-          <option value="Cash" className={` ${ theme ? "" : "text-black"}`}>Cash</option>
-          <option value="Card" className={` ${ theme ? "" : "text-black"}`}>Card</option>
-          <option value="Transfer" className={` ${ theme ? "" : "text-black"}`}>Transfer</option>
-        </select>
-                  {formik.touched.PaymentMethod && formik.errors.PaymentMethod && (
-          <span className='text-xs text-red-500 font-medium'>
-            {formik.errors.PaymentMethod}
-          </span>
-        )}
+            <span className="text-xs text-red-500 font-medium">
+              {formik.errors.CustomerEmail}
+            </span>
+          )}
         </div>
-        <button type="submit"  className={`${ theme ? "bg-black text-white" : "bg-white text-black"}  p-2`}>Generate Receipt</button>
+        <div className="flex flex-col">
+          <select
+            name="PaymentMethod"
+            value={formik.values.PaymentMethod}
+            onChange={formik.handleChange}
+            className={`border p-2`}
+          >
+            <option value="" className={` ${theme ? "" : "text-black"}`}>
+              Select Payment Method
+            </option>
+            <option value="Cash" className={` ${theme ? "" : "text-black"}`}>
+              Cash
+            </option>
+            <option value="Card" className={` ${theme ? "" : "text-black"}`}>
+              Card
+            </option>
+            <option
+              value="Transfer"
+              className={` ${theme ? "" : "text-black"}`}
+            >
+              Transfer
+            </option>
+          </select>
+          {formik.touched.PaymentMethod && formik.errors.PaymentMethod && (
+            <span className="text-xs text-red-500 font-medium">
+              {formik.errors.PaymentMethod}
+            </span>
+          )}
+        </div>
+        <button
+          type="submit"
+          className={`${theme ? "bg-black text-white" : "bg-white text-black"} ${receiptData === null ? "" : "disabled:opacity-40 disabled:cursor-not-allowed"}  p-2`} disabled={receiptData}
+        >
+          Generate Receipt
+        </button>
+
+        <button onClick={generateNewReceipt} className={`border bg-green-500 text-white p-2 ${ receiptData === null ? "hidden" : "block"}`}>Generate New Receipt</button>
       </form>
-        <div className="font-bold py-2">
-      { 
-        receiptData === null ? "Once Generated Your Receipt Will Show Below🔻" : "Contratulations ✅ Your Receipt Is Generated Successfully "
-      }
+      <div className="font-bold py-2">
+        {receiptData === null
+          ? "Once Generated Your Receipt Will Show Below🔻"
+          : "Contratulations ✅ Your Receipt Is Generated Successfully "}
       </div>
 
       {/* PREVIEW DIV */}
       {receiptData && (
         <div>
-        <div ref={ComponentRef} className={`print-area border p-4 mt-6 ${ theme ? "" : "bg-white text-black" }  shadow-md`}>
-          <div className="border-b pb-2">
-          <h1 className="text-2xl font-bold text-center">RECEIPT</h1>
-          <p className="text-center font-medium">Tee Website Coder</p>
-          <p className="text-center">Oyo, Oyo State, Nigeria</p>
-          <p className="font-light text-center">Phone/Whatsapp: 09043933210</p>
-           <p className="font-light text-center"> Email: Olaniyitoluwase@gmail.com </p> 
-           <p className="font-light text-center"> Website: receiptgenerator.vercel.app </p> 
-           </div>
+          <div
+            ref={ComponentRef}
+            className={`print-area border p-4 mt-6 ${theme ? "" : "bg-white text-black"}  shadow-md`}
+          >
+            <div className="border-b pb-2">
+              <h1 className="text-2xl font-bold text-center">RECEIPT</h1>
+              <p className="text-center font-medium">Tee Website Coder</p>
+              <p className="text-center">Oyo, Oyo State, Nigeria</p>
+              <p className="font-light text-center">
+                Phone/Whatsapp: 09043933210
+              </p>
+              <p className="font-light text-center">
+                {" "}
+                Email: Olaniyitoluwase@gmail.com{" "}
+              </p>
+              <p className="font-light text-center">
+                {" "}
+                Website: receiptgenerator.vercel.app{" "}
+              </p>
+            </div>
 
-          <div className="mt-4 flex justify-between">
+            <div className="mt-4 flex justify-between">
+              <div>
+                <p className="font-bold underline text-2xl">Customer Details</p>
+                <p className="capitalize">
+                  <strong>Customer:</strong> {receiptData.CustomerName}
+                </p>
+                <p className="capitalize">
+                  <strong>Address:</strong> {receiptData.CustomerAddress}
+                </p>
+                <p>
+                  <strong>Phone:</strong> {receiptData.CustomerPhoneNo}
+                </p>
+                <p>
+                  <strong>Email:</strong> {receiptData.CustomerEmail || "-"}
+                </p>
+                <p className="capitalize">
+                  <strong>Payment Method:</strong> {receiptData.PaymentMethod}
+                </p>
+              </div>
+
+              <div className="">
+                <p className="border-y">
+                  <strong>Date:</strong> {formattedDate}
+                </p>
+                <p className="border-b">
+                  <strong>Time:</strong> {formattedTime}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <p className="font-bold underline text-2xl">Product Details</p>
+              <p className="border-b capitalize">
+                <strong>Product:</strong> {receiptData.ProductName}
+              </p>
+              <p className="border-b">
+                <strong>Quantity:</strong> {receiptData.Quantity}
+              </p>
+              <p className="border-b">
+                <strong>Unit Price:</strong> ₦{receiptData.ProductPrice}
+              </p>
+              <p className="border-b">
+                <strong>Subtotal:</strong> ₦
+                {(
+                  Number(receiptData.ProductPrice) *
+                  Number(receiptData.Quantity)
+                ).toFixed(2)}
+              </p>
+              <p className="border-b">
+                <strong>Tax ({receiptData.TAX || 0}%):</strong> ₦
+                {(
+                  (Number(receiptData.ProductPrice) *
+                    Number(receiptData.Quantity) *
+                    Number(receiptData.TAX || 0)) /
+                  100
+                ).toFixed(2)}
+              </p>
+              <p className="font-bold text-lg border-b">
+                <strong>Total:</strong> ₦
+                {(
+                  Number(receiptData.ProductPrice) *
+                    Number(receiptData.Quantity) +
+                  (Number(receiptData.ProductPrice) *
+                    Number(receiptData.Quantity) *
+                    Number(receiptData.TAX || 0)) /
+                    100
+                ).toFixed(2)}
+              </p>
+            </div>
 
             <div>
-            <p className="font-bold underline text-2xl">Customer Details</p>
-            <p className="capitalize"><strong>Customer:</strong> {receiptData.CustomerName}</p>
-            <p className="capitalize"><strong>Address:</strong> {receiptData.CustomerAddress}</p>
-            <p><strong>Phone:</strong> {receiptData.CustomerPhoneNo}</p>
-            <p><strong>Email:</strong> {receiptData.CustomerEmail || "-"}</p>
-            <p className="capitalize"><strong>Payment Method:</strong> {receiptData.PaymentMethod}</p>
-            </div>
-
-            <div className="">
-              <p className="border-y"><strong>Date:</strong> {formattedDate}</p>
-              <p className="border-b"><strong>Time:</strong> {formattedTime}</p>
+              <h1 className="font-bold underline text-2xl py-4">
+                Additional Information
+              </h1>
+              <ul className="flex flex-col gap-1 font-thin">
+                <li>Thank you for your business,</li>
+                <li>Goods sold are not returnable,</li>
+                <li>For inquiries, contact us using the details above.</li>
+              </ul>
             </div>
           </div>
-
-          <div className="mt-4">
-            <p className="font-bold underline text-2xl">Product Details</p>
-            <p className="border-b capitalize"><strong>Product:</strong> {receiptData.ProductName}</p>
-            <p className="border-b"><strong>Quantity:</strong> {receiptData.Quantity}</p>
-            <p className="border-b"><strong>Unit Price:</strong> ₦{receiptData.ProductPrice}</p>
-            <p className="border-b"><strong>Subtotal:</strong> ₦{(Number(receiptData.ProductPrice) * Number(receiptData.Quantity)).toFixed(2)}</p>
-            <p className="border-b"><strong>Tax ({receiptData.TAX || 0}%):</strong> ₦{((Number(receiptData.ProductPrice) * Number(receiptData.Quantity) * Number(receiptData.TAX || 0)) / 100).toFixed(2)}</p>
-            <p className="font-bold text-lg border-b">
-              <strong>Total:</strong> ₦{((Number(receiptData.ProductPrice) * Number(receiptData.Quantity)) + ((Number(receiptData.ProductPrice) * Number(receiptData.Quantity) * Number(receiptData.TAX || 0)) / 100)).toFixed(2)}
-            </p>
-          </div>
-
-          <div>
-            <h1 className="font-bold underline text-2xl py-4">Additional Information</h1>
-            <ul className="flex flex-col gap-1 font-thin">
-              <li>Thank you for your business,</li>
-              <li>Goods sold are not returnable,</li>
-              <li>For inquiries, contact us using the details above.</li>
-            </ul>
-          </div>
-
-          
-        </div>
-        <button onClick={HandlePrint} className="mt-4 bg-green-600 text-white p-2">
+          <button
+            onClick={HandlePrint}
+            className="mt-4 bg-green-600 text-white p-2"
+          >
             Download Receipt
           </button>
         </div>

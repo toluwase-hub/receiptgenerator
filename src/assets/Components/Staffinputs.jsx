@@ -9,6 +9,10 @@ import { ToastContainer, toast } from "react-toastify";
 const Staffinputs = ({theme}) => {
   const [staffid, setStaffid] = useState(null);
 
+  const generateNewIdCard = ()=> {
+    window.location.reload()
+  }
+
   const componentRef = useRef();
 
  const handlePrint = useReactToPrint({
@@ -239,9 +243,12 @@ useEffect( ()=> {
           )}
         </div>
 
-        <button type="submit" className={`${ theme ? "bg-black text-white" : "bg-white text-black"}  p-2`}>
+        <button type="submit" className={`${ theme ? "bg-black text-white" : "bg-white text-black"} ${staffid === null ? "" : "disabled:opacity-40 disabled:cursor-not-allowed"}  p-2`} disabled={staffid}>
           Generate ID Card
         </button>
+
+         <button onClick={generateNewIdCard} className={`border bg-green-500 text-white p-2 ${ staffid === null ? "hidden" : "block"}`}>Generate New ID Card</button>
+      
       </form>
 
       <div className="font-bold py-2">
