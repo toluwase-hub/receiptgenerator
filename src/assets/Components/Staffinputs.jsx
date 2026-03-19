@@ -6,7 +6,7 @@ import autoTable from "jspdf-autotable";
 import { useReactToPrint } from "react-to-print";
 import { ToastContainer, toast } from "react-toastify";
 
-const Staffinputs = ({theme}) => {
+const Staffinputs = ({theme, color}) => {
   const [staffid, setStaffid] = useState(null);
 
   const generateNewIdCard = ()=> {
@@ -243,11 +243,11 @@ useEffect( ()=> {
           )}
         </div>
 
-        <button type="submit" className={`${ theme ? "bg-black text-white" : "bg-white text-black"} ${staffid === null ? "" : "disabled:opacity-40 disabled:cursor-not-allowed"}  p-2`} disabled={staffid}>
+        <button type="submit" className={` shadow-2xl ${staffid === null ? "" : "disabled:opacity-40 disabled:cursor-not-allowed"}  ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" }  p-2`} disabled={staffid}>
           Generate ID Card
         </button>
 
-         <button onClick={generateNewIdCard} className={`border bg-green-500 text-white p-2 ${ staffid === null ? "hidden" : "block"}`}>Generate New ID Card</button>
+         <button onClick={generateNewIdCard} className={`border ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" } text-white p-2 ${ staffid === null ? "hidden" : "block"}`}>Generate New ID Card</button>
       
       </form>
 
@@ -292,7 +292,7 @@ useEffect( ()=> {
             </p>
           </div>
           <button
-          className="mt-1 bg-green-600 text-white p-2" onClick={handlePrint}>Print ID Card</button>
+          className={`mt-1 text-white p-2 ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" }`} onClick={handlePrint}>Print ID Card</button>
           </div>
         )}
       </div>

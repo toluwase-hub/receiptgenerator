@@ -6,7 +6,7 @@ import autoTable from "jspdf-autotable";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
-const Receiptinputs = ({ theme }) => {
+const Receiptinputs = ({ theme, color }) => {
   const [receiptData, setReceiptData] = useState(null);
 
   const generateNewReceipt = ()=> {
@@ -142,7 +142,7 @@ const Receiptinputs = ({ theme }) => {
   // };
 
   return (
-    <div className="w-[95%] mx-auto">
+    <div className="">
       <h1 className="font-bold">Receipt Section</h1>
       {/* FORM */}
       <ToastContainer />
@@ -341,12 +341,12 @@ const Receiptinputs = ({ theme }) => {
         </div>
         <button
           type="submit"
-          className={`${theme ? "bg-black text-white" : "bg-white text-black"} ${receiptData === null ? "" : "disabled:opacity-40 disabled:cursor-not-allowed"}  p-2`} disabled={receiptData}
+          className={` shadow-2xl ${receiptData === null ? "" : "disabled:opacity-40 disabled:cursor-not-allowed"}  ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" }  p-2`} disabled={receiptData}
         >
           Generate Receipt
         </button>
 
-        <button onClick={generateNewReceipt} className={`border bg-green-500 text-white p-2 ${ receiptData === null ? "hidden" : "block"}`}>Generate New Receipt</button>
+        <button onClick={generateNewReceipt} className={`border  text-white p-2 ${ receiptData === null ? "hidden" : "block"} ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" }`}>Generate New Receipt</button>
       </form>
       <div className="font-bold py-2">
         {receiptData === null
@@ -461,7 +461,7 @@ const Receiptinputs = ({ theme }) => {
           </div>
           <button
             onClick={HandlePrint}
-            className="mt-4 bg-green-600 text-white p-2"
+            className={`mt-4  text-white p-2 ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" } `}
           >
             Download Receipt
           </button>
