@@ -351,7 +351,7 @@ const Receiptinputs = ({ theme, color }) => {
       <div className="font-bold py-2">
         {receiptData === null
           ? "Once Generated Your Receipt Will Show Below🔻"
-          : "Contratulations ✅ Your Receipt Is Generated Successfully "}
+          : "Congratulations ✅ Your Receipt Is Generated Successfully "}
       </div>
 
       {/* PREVIEW DIV */}

@@ -254,7 +254,7 @@ useEffect( ()=> {
       <div className="font-bold py-2">
         {staffid === null
           ? "Once Generated Your ID Card Will Show Below🔻"
-          : "Contratulations ✅ Your ID Card Is Generated Successfully "}
+          : "Congratulations ✅ Your ID Card Is Generated Successfully "}
       </div>
 
       <div>

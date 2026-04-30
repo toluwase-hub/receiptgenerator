@@ -16,14 +16,14 @@ const Navbar = ({theme, changeTheme, color, white, black, red, green, blue}) => 
   return (
     <div className='lg:flex block '>
 
-      {/* Sidebar */}
+      {/*decktop Sidebar */}
       
       <div className={`  overflow-hidden  ${theme ? "bg-white border-black" : "bg-black/95 text-white border-white"} hidden lg:flex  transition-all duration-500  flex flex-col  w-50 ${shwoSideBar ? "max-w-64  border-r " : "max-w-0"}`}>
         <nav className={` overflow-x-hidden mt-6 fixed left-3 transition-all duration-500  ${shwoSideBar ? "max-w-64 " : "max-w-0"} `}>
           <ul className='space-y-4'>
             <li>
               <NavLink to="/" className={  ({isActive}) => 
-                  isActive ? "text-gray-400  " : ""
+                  isActive ? "text-gray-400 border-l-5 bg-gray-200 pr-10 py-2 flex pl-2 border-blue-500 " : ""
               }>
                 
                   <div className={`flex  gap-2 items-center  `}>
@@ -35,7 +35,7 @@ const Navbar = ({theme, changeTheme, color, white, black, red, green, blue}) => 
 
             <li>
               <NavLink to="/staff"  className={  ({isActive}) => 
-                  isActive ? "text-gray-400  " : ""
+                  isActive ? "text-gray-400  border-l-5 bg-gray-200 pr-10 py-2 flex pl-2 border-blue-500 " : ""
               }>
                  <div className={`flex  gap-2 items-center  `}>
                   <span><GrUserWorker size={25} /></span>
@@ -46,7 +46,7 @@ const Navbar = ({theme, changeTheme, color, white, black, red, green, blue}) => 
 
             <li>
               <NavLink to="/setting"  className={  ({isActive}) => 
-                  isActive ? "text-gray-400  " : ""
+                  isActive ? "text-gray-400 border-l-5 bg-gray-200 pr-10 py-2 flex pl-2 border-blue-500 " : ""
               }>
                  <div className={`flex  gap-2 items-center `}>
                   <span><IoSettingsOutline size={25} /></span>
@@ -65,7 +65,7 @@ const Navbar = ({theme, changeTheme, color, white, black, red, green, blue}) => 
         </nav>
       </div>
     
-
+        {/* mobile nav bar */}
        <div className={` lg:hidden  fixed bottom-0 transition-all duration-200 w-screen  flex flex-col ${theme ? "bg-white/95 text-black" : "bg-black/95 text-white"}  `}>
         <nav className='w-[90%] mx-auto mt-6 '>
           <ul className='space-y-5 flex justify-around'>
@@ -109,9 +109,9 @@ const Navbar = ({theme, changeTheme, color, white, black, red, green, blue}) => 
       <main className={`flex-1 p-6 transition-all duration-500  ${ theme ? "bg-white text-black" : "bg-black text-white"}  `}>
         <div className={`pr-5 pb-1 fixed top-0 pt-5 w-full ${theme ?  "bg-white" : " bg-black"} `}>
           <h1 className='font-bold text-2xl lg:text-4xl  '>Tee Web dev Receipt and Staff ID card generator</h1>
-          <button className='hidden lg:block' onClick={()=> setshwoSideBar(!shwoSideBar)}> {shwoSideBar ? (
-            <MdOutlineCancelPresentation size={26} /> ) : (<AiOutlineMenu size={26} />
-   )       }</button>
+          <button className='hidden lg:block scale-170 hover:scale-160 trasistion-all duration-200' onClick={()=> setshwoSideBar(!shwoSideBar)}> {shwoSideBar ? 
+            "⏪  ": "⏩"
+          }</button>
         </div>
         
         <Routes >
