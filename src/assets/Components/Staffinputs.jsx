@@ -6,30 +6,27 @@ import autoTable from "jspdf-autotable";
 import { useReactToPrint } from "react-to-print";
 import { ToastContainer, toast } from "react-toastify";
 
-const Staffinputs = ({theme, color}) => {
+const Staffinputs = ({ theme, color }) => {
   const [staffid, setStaffid] = useState(null);
 
-  const generateNewIdCard = ()=> {
-    window.location.reload()
-  }
+  const generateNewIdCard = () => {
+    window.location.reload();
+  };
 
   const componentRef = useRef();
 
- const handlePrint = useReactToPrint({
-  contentRef: componentRef,
-  documentTitle: "Staff-ID-Card",
-});
+  const handlePrint = useReactToPrint({
+    contentRef: componentRef,
+    documentTitle: "Staff-ID-Card",
+  });
 
-useEffect( ()=> {
-  
-      if(staffid === null){
-        toast.warning("Enter the Required Inputs")
-      } 
-       else{
-        toast.success("Successfully Generated")
-      }
-  
-},[staffid])
+  useEffect(() => {
+    if (staffid === null) {
+      toast.warning("Enter the Required Inputs");
+    } else {
+      toast.success("Successfully Generated");
+    }
+  }, [staffid]);
 
   const validationSchema = yup.object({
     Image: yup
@@ -167,11 +164,27 @@ useEffect( ()=> {
             className="border p-2"
           >
             <option value="">Select Staff Post</option>
-            <option className={` ${ theme ? "" : "text-black"}`} value="CEO" >CEO</option>
-            <option className={` ${ theme ? "" : "text-black"}`} value="PA">P.A</option>
-            <option className={` ${ theme ? "" : "text-black"}`} value="Social Media Manager">Social Media Manager</option>
-            <option className={` ${ theme ? "" : "text-black"}`} value="Secretary">Secretary</option>
-            <option className={` ${ theme ? "" : "text-black"}`} value="Other">Other</option>
+            <option className={` ${theme ? "" : "text-black"}`} value="CEO">
+              CEO
+            </option>
+            <option className={` ${theme ? "" : "text-black"}`} value="PA">
+              P.A
+            </option>
+            <option
+              className={` ${theme ? "" : "text-black"}`}
+              value="Social Media Manager"
+            >
+              Social Media Manager
+            </option>
+            <option
+              className={` ${theme ? "" : "text-black"}`}
+              value="Secretary"
+            >
+              Secretary
+            </option>
+            <option className={` ${theme ? "" : "text-black"}`} value="Other">
+              Other
+            </option>
           </select>
           {formik.touched.Post && formik.errors.Post && (
             <span className="text-xs text-red-500 font-medium">
@@ -243,12 +256,20 @@ useEffect( ()=> {
           )}
         </div>
 
-        <button type="submit" className={` shadow-2xl ${staffid === null ? "" : "disabled:opacity-40 disabled:cursor-not-allowed"}  ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" }  p-2`} disabled={staffid}>
+        <button
+          type="submit"
+          className={` shadow-2xl ${staffid === null ? "" : "disabled:opacity-40 disabled:cursor-not-allowed"}  ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" : "bg-blue-500"}  p-2`}
+          disabled={staffid}
+        >
           Generate ID Card
         </button>
 
-         <button onClick={generateNewIdCard} className={`border ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" } text-white p-2 ${ staffid === null ? "hidden" : "block"}`}>Generate New ID Card</button>
-      
+        <button
+          onClick={generateNewIdCard}
+          className={`border ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" : "bg-blue-500"} text-white p-2 ${staffid === null ? "hidden" : "block"}`}
+        >
+          Generate New ID Card
+        </button>
       </form>
 
       <div className="font-bold py-2">
@@ -260,39 +281,50 @@ useEffect( ()=> {
       <div>
         {staffid && (
           <div>
-          
-          <div ref={componentRef} className={`print-area flex flex-col justify-center ${theme ? "" : "bg-white text-black"} items-center border gap-3  pb-4`}>
+            <div
+              ref={componentRef}
+              className={`print-area flex flex-col justify-center ${theme ? "" : "bg-white text-black"} items-center border gap-3  pb-4`}
+            >
+              <div className=" bg-blue-800 w-full flex flex-col gap-4 items-center rounded-b-full pt-4  ">
+                <p className="font-bold text-white">
+                  <span className="text-3xl italic">T</span>ee Web Coder
+                </p>
+                <p className="">
+                  <img
+                    src={URL.createObjectURL(staffid.Image)}
+                    alt="staff_Image"
+                    className="border-3 border-white object-cover w-30 h-30 rounded-full"
+                  />
+                </p>
+              </div>
 
-            <div className=" bg-blue-800 w-full flex flex-col gap-4 items-center rounded-b-full pt-4  ">
-                <p className="font-bold text-white"><span className="text-3xl italic">T</span>ee Web Coder</p>
-            <p className="">
-              <img src={URL.createObjectURL(staffid.Image)} alt="staff_Image" className="border-3 border-white object-cover w-30 h-30 rounded-full"  />
-            </p>
+              <p className="capitalize font-bold text-2xl italic">
+                {staffid.SurName} {staffid.FirstName}
+              </p>
+              <p className="bg-blue-800 text-white px-2 py-1 rounded-bl-2xl rounded-tr-2xl">
+                {staffid.Post}
+              </p>
+              <p className="text-sm">
+                {" "}
+                <strong className="text-blue-500">ID NO: </strong>
+                {staffid.IdNumber}
+              </p>
+              <p className="capitalize text-sm">
+                {" "}
+                <strong className="text-blue-500 ">Address: </strong>
+                {staffid.StaffAddress}
+              </p>
+              <p className="capitalize text-sm">
+                <strong className="text-blue-500">Phone: </strong>
+                {staffid.StaffPhoneNo}
+              </p>
             </div>
-            
-            <p className="capitalize font-bold text-2xl italic">
-              {staffid.SurName} {staffid.FirstName}
-            </p>
-            <p className="bg-blue-800 text-white px-2 py-1 rounded-bl-2xl rounded-tr-2xl">
-              {staffid.Post}
-            </p>
-            <p className="text-sm">
-              {" "}
-              <strong className="text-blue-500">ID NO: </strong>
-              {staffid.IdNumber}
-            </p>
-            <p className="capitalize text-sm">
-              {" "}
-              <strong className="text-blue-500 ">Address: </strong>
-              {staffid.StaffAddress}
-            </p>
-            <p className="capitalize text-sm">
-              <strong className="text-blue-500">Phone: </strong>
-              {staffid.StaffPhoneNo}
-            </p>
-          </div>
-          <button
-          className={`mt-1 text-white p-2 ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" }`} onClick={handlePrint}>Print ID Card</button>
+            <button
+              className={`mt-1 text-white p-2 ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" : "bg-blue-500"}`}
+              onClick={handlePrint}
+            >
+              Print ID Card
+            </button>
           </div>
         )}
       </div>

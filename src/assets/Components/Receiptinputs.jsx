@@ -9,9 +9,9 @@ import { ToastContainer, toast } from "react-toastify";
 const Receiptinputs = ({ theme, color }) => {
   const [receiptData, setReceiptData] = useState(null);
 
-  const generateNewReceipt = ()=> {
-    window.location.reload()
-  }
+  const generateNewReceipt = () => {
+    window.location.reload();
+  };
 
   const ComponentRef = useRef();
 
@@ -341,12 +341,18 @@ const Receiptinputs = ({ theme, color }) => {
         </div>
         <button
           type="submit"
-          className={` shadow-2xl ${receiptData === null ? "" : "disabled:opacity-40 disabled:cursor-not-allowed"}  ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" }  p-2`} disabled={receiptData}
+          className={` shadow-2xl ${receiptData === null ? "" : "disabled:opacity-40 disabled:cursor-not-allowed"}  ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" : "bg-blue-500"}  p-2`}
+          disabled={receiptData}
         >
           Generate Receipt
         </button>
 
-        <button onClick={generateNewReceipt} className={`border  text-white p-2 ${ receiptData === null ? "hidden" : "block"} ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" }`}>Generate New Receipt</button>
+        <button
+          onClick={generateNewReceipt}
+          className={`border  text-white p-2 ${receiptData === null ? "hidden" : "block"} ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" : "bg-blue-500"}`}
+        >
+          Generate New Receipt
+        </button>
       </form>
       <div className="font-bold py-2">
         {receiptData === null
@@ -461,7 +467,7 @@ const Receiptinputs = ({ theme, color }) => {
           </div>
           <button
             onClick={HandlePrint}
-            className={`mt-4  text-white p-2 ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" :  "bg-blue-500" } `}
+            className={`mt-4  text-white p-2 ${color === "White" ? "bg-white text-black" : color === "Black" ? "bg-black text-white" : color === "Red" ? "bg-red-500" : color === "Green" ? "bg-green-500" : "bg-blue-500"} `}
           >
             Download Receipt
           </button>
