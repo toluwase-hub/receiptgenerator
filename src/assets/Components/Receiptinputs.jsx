@@ -345,7 +345,7 @@ const Receiptinputs = ({ theme, color }) => {
           disabled={receiptData}
         >
           Generate Receipt
-        </button>
+        </button>   
 
         <button
           onClick={generateNewReceipt}

@@ -9,6 +9,8 @@ import { IoReceiptOutline } from "react-icons/io5";
 import { GrUserWorker } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
 import Online from "./Components/Onlinestatus";
+import { IoArrowRedoOutline } from "react-icons/io5";
+import { IoArrowUndoOutline } from "react-icons/io5";
 const Navbar = ({
   theme,
   changeTheme,
@@ -180,11 +182,11 @@ const Navbar = ({
             Tee Web dev Receipt and Staff ID card generator
           </h1>
           <button
-            className="hidden lg:block scale-170 hover:scale-160 trasistion-all duration-200"
+            className={`hidden ${shwoSideBar ? "rotate-180" : ""} lg:block scale-170 hover:scale-160 trasistion-all duration-200 mt-1 `}
             onClick={() => setshwoSideBar(!shwoSideBar)}
           >
             {" "}
-            {shwoSideBar ? "⏪  " : "⏩"}
+            { <IoArrowRedoOutline size={25} />}
           </button>
         </div>
 
